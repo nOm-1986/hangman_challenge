@@ -1,5 +1,7 @@
+import numbers
 import random;
 from os import system, name;
+
 
 def list_hangman_attempts(attempt):
     hangman_figure = [
@@ -88,6 +90,14 @@ def welcome_message():
     """
 
 
+def read_random_word():
+    with open("./archivos/data.txt", "r", encoding="utf-8") as f:
+        words = [ x.strip().lower() for x in f ]
+        chosen_word = random.choice(words)
+    return words
+       
+
+
 def clearConsole():
     if name == "nt":
         system("cls")
@@ -125,4 +135,5 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    #run()
+    print(read_random_word())
