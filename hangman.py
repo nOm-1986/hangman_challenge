@@ -1,6 +1,7 @@
 import numbers
 import random;
-from os import system, name;
+from os import system, name
+from turtle import position;
 
 
 def list_hangman_attempts(attempt):
@@ -94,15 +95,51 @@ def read_random_word():
     with open("./archivos/data.txt", "r", encoding="utf-8") as f:
         words = [ x.strip().lower() for x in f ]
         chosen_word = random.choice(words)
-    return words
+    return chosen_word
        
-
 
 def clearConsole():
     if name == "nt":
         system("cls")
     else:
         system("clear")
+
+
+def playing_game():
+    attempts = 7
+    #chosen_word = read_random_word()
+    chosen_word = 'abeja'
+    word_underscore = ['_'] * len(chosen_word)
+    possitions = {}
+    for ind, letter in enumerate(chosen_word):
+        if not possitions.get(letter):
+            possitions[letter] = []
+        possitions[letter].append(ind)
+    
+    print(word_underscore)
+
+    for k, v in position:
+        print(k, v)
+
+    # selected = 'a'
+    # for let, pos in possitions:
+    #     if selected == let:
+    #         word_underscore[pos] = selected
+    #     else :
+    #         word_underscore[pos] = ['_']
+    # print(word_underscore)
+    #result = True
+
+    # while result:
+    #     print('Adivina la palabra: ')
+    #     t = '_ '*count_guess_word
+    #     print(t, f'.   Total letters: {count_guess_word}')
+    #     input_letter = input('Insert your letter: ')    
+    #     result = False
+
+
+def print_function(word, input_player):
+    pass
 
 
 def menu():
@@ -113,8 +150,7 @@ def menu():
 
         if (option == '1' or option == '2' or option == '3'):
             clearConsole()
-            print(list_hangman_attempts(6))
-            print('Iniciamos el proceso limpiando consola')
+            playing_game()
 
         elif option == '4':
             clearConsole()
@@ -135,5 +171,4 @@ def run():
 
 
 if __name__ == '__main__':
-    #run()
-    print(read_random_word())
+    run()
