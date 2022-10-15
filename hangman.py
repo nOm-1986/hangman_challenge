@@ -73,7 +73,7 @@ def list_hangman_attempts(attempt):
     return hangman_figure[attempt]
 
 
-def welcome_message():
+def hangman_draw():
     return """
             ██╗░░██╗░█████╗░███╗░░██╗░██████╗░███╗░░░███╗░█████╗░███╗░░██╗
             ██║░░██║██╔══██╗████╗░██║██╔════╝░████╗░████║██╔══██╗████╗░██║
@@ -81,12 +81,15 @@ def welcome_message():
             ██╔══██║██╔══██║██║╚████║██║░░╚██╗██║╚██╔╝██║██╔══██║██║╚████║
             ██║░░██║██║░░██║██║░╚███║╚██████╔╝██║░╚═╝░██║██║░░██║██║░╚███║
             ╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝░╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝
+    """
+
+def option_menu_messages():
+    return """
             Welcome to hangman play - You only have seven attempts.
                 Please select an option:
                 1 - Play.
                 2 - Words between 4 and 5 letters. -- Coming soon
                 3 - More than 6 letters. -- Coming soon
-                4 - Restart game.
                 5 - To quit
     """
 
@@ -106,47 +109,49 @@ def clearConsole():
 
 
 def playing_game():
-    attempts = 7
-    #chosen_word = read_random_word()
-    chosen_word = 'abeja'
+    lives = 0
+    chosen_word = read_random_word()
     word_underscore = ['_'] * len(chosen_word)
-    possitions = {}
-    for ind, letter in enumerate(chosen_word):
-        if not possitions.get(letter):
-            possitions[letter] = []
-        possitions[letter].append(ind)
-    
-    print(word_underscore)
+    chosen_letter_player = input('Please, insert a letter: ')
+    result = True
 
-    for k, v in position:
-        print(k, v)
+    while result and lives < 7:
+        clearConsole()
+        print(list_hangman_attempts(lives))
+        isInWord = 0
+        position = 0
+        for letter in chosen_word:
+            if word_underscore[position] == '_':
+                if chosen_letter_player == letter:
+                    word_underscore[position] = chosen_letter_player
+                    isInWord += 1
+                else:
+                    word_underscore[position] = '_'
+            position += 1
+        
+        word_to_compare = ''
+        for word in word_underscore:
+            word_to_compare += word
 
-    # selected = 'a'
-    # for let, pos in possitions:
-    #     if selected == let:
-    #         word_underscore[pos] = selected
-    #     else :
-    #         word_underscore[pos] = ['_']
-    # print(word_underscore)
-    #result = True
+        if isInWord == 0:
+            lives += 1
 
-    # while result:
-    #     print('Adivina la palabra: ')
-    #     t = '_ '*count_guess_word
-    #     print(t, f'.   Total letters: {count_guess_word}')
-    #     input_letter = input('Insert your letter: ')    
-    #     result = False
-
-
-def print_function(word, input_player):
-    pass
+        if word_to_compare == chosen_word:
+            print('='*50)
+            print('FELICITACIONES GANASTESSSSS')
+            break
+        
+        clearConsole()
+        print(list_hangman_attempts(lives))
+        print(word_underscore)
+        chosen_letter_player = input('Please, insert a letter: ')
 
 
 def menu():
     running = True
-
     while running:
-        option = input(welcome_message())
+        print(hangman_draw())
+        option = input(option_menu_messages())
 
         if (option == '1' or option == '2' or option == '3'):
             clearConsole()
