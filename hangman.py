@@ -109,15 +109,16 @@ def clearConsole():
 
 
 def playing_game():
+    clearConsole()
     lives = 0
     chosen_word = read_random_word()
     word_underscore = ['_'] * len(chosen_word)
     chosen_letter_player = input('Please, insert a letter: ')
     result = True
+    print(list_hangman_attempts(lives))
 
     while result and lives < 7:
-        clearConsole()
-        print(list_hangman_attempts(lives))
+        
         isInWord = 0
         position = 0
         for letter in chosen_word:
@@ -141,6 +142,11 @@ def playing_game():
             print('FELICITACIONES GANASTESSSSS')
             break
         
+        if lives > 6:
+            clearConsole()
+            print('You lost, please try again.')
+            break
+
         clearConsole()
         print(list_hangman_attempts(lives))
         print(word_underscore)
