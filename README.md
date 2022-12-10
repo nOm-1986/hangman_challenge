@@ -1,2 +1,2 @@
 # hangman_challenge
-I am still working around it.
+Simple juego del ahorcado con python.
